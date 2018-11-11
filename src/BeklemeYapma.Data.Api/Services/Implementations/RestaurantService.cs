@@ -69,7 +69,7 @@ namespace BeklemeYapma.Data.Api.Services.Implementations
 
             try
             {
-                IAsyncCursor<Restaurant> Restaurants = await _mongoDatabase.GetCollection<Restaurant>(BEKLEMEYAPMA_RESTAURANT_COLLECTION_NAME).FindAsync(d => d.Id == request.Id && d.CompanyId == request.CompanyId);
+                IAsyncCursor<Restaurant> Restaurants = await _mongoDatabase.GetCollection<Restaurant>(BEKLEMEYAPMA_RESTAURANT_COLLECTION_NAME).FindAsync(d => d.Id == request.Id);
 
                 Restaurant Restaurant = await Restaurants.FirstOrDefaultAsync();
 
@@ -98,9 +98,13 @@ namespace BeklemeYapma.Data.Api.Services.Implementations
                 var filters = new List<FilterDefinition<Restaurant>>();
                 var builder = Builders<Restaurant>.Filter;
 
-                filters.Add(builder.Eq(r => r.CompanyId, request.CompanyId));
+                if (!string.IsNullOrEmpty(request.CompanyId))
+                    filters.Add(builder.Eq(r => r.CompanyId, request.CompanyId));
 
-                var query = builder.And(filters);
+
+                FilterDefinition<Restaurant> query = filters.Any()
+                    ? builder.And(filters)
+                    : builder.Empty;
 
                 Task<List<Restaurant>> Restaurants = _mongoDatabase.GetCollection<Restaurant>(BEKLEMEYAPMA_RESTAURANT_COLLECTION_NAME)
                                                     .Find(query)
