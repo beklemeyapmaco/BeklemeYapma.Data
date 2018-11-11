@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/079c1516-271a-45ee-af65-88653b629b39/resourceGroups/MasterResources/providers/Microsoft.Web/sites/beklemeyapma-data-wapi-master",
+    "appService.deploySubpath": "src/BeklemeYapma.Data.Api/obj/publish"
+}
