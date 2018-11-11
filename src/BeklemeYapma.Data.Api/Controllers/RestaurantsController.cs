@@ -36,7 +36,7 @@ namespace BeklemeYapma.Data.Api.Controllers
 
                     bulkRestaurantCreateResponse.Add(new BulkRestaurantCreateResponse
                     {
-                        IsCreated = string.IsNullOrEmpty(createRestaurantResponse.Data),
+                        IsCreated = !string.IsNullOrEmpty(createRestaurantResponse.Data),
                         RestaurantId = createRestaurantResponse.Data,
                         RestaurantName = request.Name
                     });
