@@ -1,4 +1,5 @@
-﻿using BeklemeYapma.Data.Api.Models.Requests;
+﻿using BeklemeYapma.Data.Api.Models.Domain;
+using BeklemeYapma.Data.Api.Models.Requests;
 using BeklemeYapma.Data.Api.Models.Responses;
 using BeklemeYapma.Data.Api.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -67,7 +68,7 @@ namespace BeklemeYapma.Data.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(RestaurantGetResponse))]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(Restaurant))]
         [SwaggerResponse((int)HttpStatusCode.NotFound, Description = "No Restaurant found for requested filter.")]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, Description = "Request not accepted.")]
         public async Task<IActionResult> Get(string id)
@@ -75,7 +76,7 @@ namespace BeklemeYapma.Data.Api.Controllers
             try
             {
                 RestaurantGetRequest request = new RestaurantGetRequest { Id = id };
-                BaseResponse<RestaurantGetResponse> RestaurantResponse = await _RestaurantService.GetRestaurantAsync(request);
+                BaseResponse<Restaurant> RestaurantResponse = await _RestaurantService.GetRestaurantAsync(request);
 
                 if (RestaurantResponse.HasError)
                 {
@@ -102,7 +103,7 @@ namespace BeklemeYapma.Data.Api.Controllers
         [SwaggerResponse((int)HttpStatusCode.BadRequest, Description = "Request not accepted.")]
         public async Task<IActionResult> Get([FromQuery]RestaurantGetAllRequest request)
         {
-            BaseResponse<List<RestaurantGetResponse>> RestaurantGetAllResponse = await _RestaurantService.GetRestaurantsAsync(request);
+            BaseResponse<List<Restaurant>> RestaurantGetAllResponse = await _RestaurantService.GetRestaurantsAsync(request);
 
             if (RestaurantGetAllResponse.HasError)
             {
@@ -114,8 +115,8 @@ namespace BeklemeYapma.Data.Api.Controllers
                 return NotFound("No Restaurant found for requested filter.");
             }
 
-            var response = new PagedAPIResponse<List<RestaurantGetResponse>>();
-            response.Items = new List<RestaurantGetResponse>();
+            var response = new PagedAPIResponse<List<Restaurant>>();
+            response.Items = new List<Restaurant>();
             response.Items.AddRange(RestaurantGetAllResponse.Data);
 
             PreparePagination(request.Offset, request.Limit, RestaurantGetAllResponse.Total, "Restaurants", response);

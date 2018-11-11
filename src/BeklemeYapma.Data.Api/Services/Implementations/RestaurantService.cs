@@ -63,22 +63,15 @@ namespace BeklemeYapma.Data.Api.Services.Implementations
             return createRestaurantResponse;
         }
 
-        public async Task<BaseResponse<RestaurantGetResponse>> GetRestaurantAsync(RestaurantGetRequest request)
+        public async Task<BaseResponse<Restaurant>> GetRestaurantAsync(RestaurantGetRequest request)
         {
-            BaseResponse<RestaurantGetResponse> response = new BaseResponse<RestaurantGetResponse>();
+            BaseResponse<Restaurant> response = new BaseResponse<Restaurant>();
 
             try
             {
                 IAsyncCursor<Restaurant> Restaurants = await _mongoDatabase.GetCollection<Restaurant>(BEKLEMEYAPMA_RESTAURANT_COLLECTION_NAME).FindAsync(d => d.Id == request.Id);
 
-                Restaurant Restaurant = await Restaurants.FirstOrDefaultAsync();
-
-                response.Data = Restaurant != null ? new RestaurantGetResponse
-                {
-                    Id = Restaurant.Id,
-                    CompanyId = Restaurant.CompanyId,
-                    Name = Restaurant.Name
-                } : null;
+                response.Data = await Restaurants.FirstOrDefaultAsync();
             }
             catch (Exception ex)
             {
@@ -89,9 +82,9 @@ namespace BeklemeYapma.Data.Api.Services.Implementations
             return response;
         }
 
-        public async Task<BaseResponse<List<RestaurantGetResponse>>> GetRestaurantsAsync(RestaurantGetAllRequest request)
+        public async Task<BaseResponse<List<Restaurant>>> GetRestaurantsAsync(RestaurantGetAllRequest request)
         {
-            BaseResponse<List<RestaurantGetResponse>> getRestaurantsResponse = new BaseResponse<List<RestaurantGetResponse>>();
+            BaseResponse<List<Restaurant>> getRestaurantsResponse = new BaseResponse<List<Restaurant>>();
 
             try
             {
@@ -118,17 +111,7 @@ namespace BeklemeYapma.Data.Api.Services.Implementations
                 await Task.WhenAll(Restaurants, count);
 
                 getRestaurantsResponse.Total = Convert.ToInt32(count.Result);
-                getRestaurantsResponse.Data = new List<RestaurantGetResponse>();
-
-                Restaurants.Result.ForEach(Restaurant =>
-                {
-                    getRestaurantsResponse.Data.Add(new RestaurantGetResponse
-                    {
-                        Id = Restaurant.Id,
-                        CompanyId = Restaurant.CompanyId,
-                        Name = Restaurant.Name
-                    });
-                });
+                getRestaurantsResponse.Data = Restaurants.Result;
             }
             catch (Exception ex)
             {
