@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BeklemeYapma.Data.Api.Services
 {
-    public interface IRestaurantService
+    public interface IRestaurantsService
     {
         Task<BaseResponse<string>> CreateRestaurantAsync(CreateRestaurantRequest request);
         Task<BaseResponse<Restaurant>> GetRestaurantAsync(RestaurantGetRequest request);

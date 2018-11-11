@@ -60,7 +60,7 @@ namespace BeklemeYapma.Data.Api
             services.AddResponseCompression();
 
             //Services
-            services.AddTransient<IRestaurantService, RestaurantService>();
+            services.AddTransient<IRestaurantsService, RestaurantsService>();
 
             //Data
             services.AddSingleton<IMongoDatabase>(new MongoClient(Configuration.GetValue<string>("BeklemeYapmaCosmosDbUrl")).GetDatabase(BeklemeYapma_COSMOSDB_DBNAME));

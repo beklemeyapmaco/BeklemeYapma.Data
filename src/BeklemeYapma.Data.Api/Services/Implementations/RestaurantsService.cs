@@ -12,14 +12,14 @@ using System.Threading.Tasks;
 
 namespace BeklemeYapma.Data.Api.Services.Implementations
 {
-    public class RestaurantService : IRestaurantService
+    public class RestaurantsService : IRestaurantsService
     {
-        private readonly ILogger<RestaurantService> _logger;
+        private readonly ILogger<RestaurantsService> _logger;
         private readonly IConfiguration _configuration;
         public readonly IMongoDatabase _mongoDatabase;
         private const string BEKLEMEYAPMA_RESTAURANT_COLLECTION_NAME = "Restaurants";
 
-        public RestaurantService(ILogger<RestaurantService> logger, IConfiguration configuration, IMongoDatabase mongoDatabase)
+        public RestaurantsService(ILogger<RestaurantsService> logger, IConfiguration configuration, IMongoDatabase mongoDatabase)
         {
             _logger = logger;
             _configuration = configuration;

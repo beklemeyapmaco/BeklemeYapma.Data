@@ -14,9 +14,9 @@ namespace BeklemeYapma.Data.Api.Controllers
     [ApiController]
     public class RestaurantsController : BaseController
     {
-        private readonly IRestaurantService _RestaurantService;
+        private readonly IRestaurantsService _RestaurantService;
 
-        public RestaurantsController(IRestaurantService RestaurantService)
+        public RestaurantsController(IRestaurantsService RestaurantService)
         {
             _RestaurantService = RestaurantService;
         }
