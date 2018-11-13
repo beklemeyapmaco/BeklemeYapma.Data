@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BeklemeYapma.Data.Api.Controllers
 {
-    [Route("api/Restaurants")]
+    [Route("api/restaurants")]
     [ApiController]
     public class RestaurantsController : BaseController
     {
