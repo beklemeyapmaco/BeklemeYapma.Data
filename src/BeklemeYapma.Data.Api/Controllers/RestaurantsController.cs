@@ -96,7 +96,6 @@ namespace BeklemeYapma.Data.Api.Controllers
             }
         }
 
-
         [HttpGet]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(List<RestaurantGetAllRequest>))]
         [SwaggerResponse((int)HttpStatusCode.NotFound, Description = "No Restaurant found for requested filter.")]
