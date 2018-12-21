@@ -59,7 +59,7 @@ namespace BeklemeYapma.Data.Api.Controllers
 
             if (createRestaurantResponse.HasError)
             {
-                return BadRequest(createRestaurantResponse.Errors);
+                return BadRequest(createRestaurantResponse);
             }
             else
             {
@@ -88,7 +88,7 @@ namespace BeklemeYapma.Data.Api.Controllers
                     return NotFound("No Restaurant found for requested filter.");
                 }
 
-                return Ok(RestaurantResponse.Data);
+                return Ok(RestaurantResponse);
             }
             catch (System.Exception ex)
             {
