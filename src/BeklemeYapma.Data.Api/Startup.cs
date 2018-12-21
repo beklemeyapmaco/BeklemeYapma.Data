@@ -63,7 +63,7 @@ namespace BeklemeYapma.Data.Api
             services.AddTransient<IRestaurantsService, RestaurantsService>();
 
             //Data
-            services.AddSingleton<IMongoDatabase>(new MongoClient(Configuration.GetValue<string>("BeklemeYapmaCosmosDbUrl")).GetDatabase(BeklemeYapma_COSMOSDB_DBNAME));
+            services.AddSingleton<IMongoDatabase>(new MongoClient(Configuration.GetValue<string>("BeklemeYapmaMongoDbUrl")).GetDatabase(BeklemeYapma_COSMOSDB_DBNAME));
 
             services.AddSwaggerGen(c =>
             {
